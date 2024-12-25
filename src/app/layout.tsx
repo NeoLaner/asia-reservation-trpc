@@ -1,9 +1,13 @@
 import "@/styles/globals.css";
-
-import { GeistSans } from "geist/font/sans";
+// import "" "fonts/sans"
+import localFont from "next/font/local";
+import { Inter } from "next/font/google";
+// import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
 
 import { TRPCReactProvider } from "@/trpc/react";
+import { ThemeProvider } from "./_components/theme-provider";
+import MainLayout from "./_components/main-layout";
 
 export const metadata: Metadata = {
   title: "Create T3 App",
@@ -11,15 +15,40 @@ export const metadata: Metadata = {
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+  weight: ["300", "400", "500", "600", "700"],
+});
+
+const fontFarsi = localFont({
+  src: "./IRAN_SemiBold.woff2",
+  variable: "--font-farsi",
+  display: "swap",
+});
+
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${GeistSans.variable}`}>
-      <body>
-        <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-          <TRPCReactProvider>{children}</TRPCReactProvider>
-        </main>
+    // <html lang="en" className={`${GeistSans.variable}`}>
+    <html
+      suppressHydrationWarning
+      lang="fr"
+      className={`${fontFarsi.variable} ${inter.variable}`}
+    >
+      <body className="font-sans">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <TRPCReactProvider>
+            <MainLayout>{children}</MainLayout>
+          </TRPCReactProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
