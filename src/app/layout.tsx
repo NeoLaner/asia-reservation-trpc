@@ -1,6 +1,7 @@
 import "@/styles/globals.css";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 // import "" "fonts/sans"
-import localFont from "next/font/local";
+
 import { Inter } from "next/font/google";
 // import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
@@ -22,22 +23,18 @@ const inter = Inter({
   weight: ["300", "400", "500", "600", "700"],
 });
 
-const fontFarsi = localFont({
-  src: "./IRAN_SemiBold.woff2",
-  variable: "--font-farsi",
-  display: "swap",
-});
+// const fontFarsi = localFont({
+//   src: "./IRAN_SemiBold.woff2",
+//   variable: "--font-farsi",
+//   display: "swap",
+// });
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     // <html lang="en" className={`${GeistSans.variable}`}>
-    <html
-      suppressHydrationWarning
-      lang="fr"
-      className={`${fontFarsi.variable} ${inter.variable}`}
-    >
+    <html suppressHydrationWarning lang="fr" className={` ${inter.variable}`}>
       <body className="font-sans">
         <ThemeProvider
           attribute="class"
@@ -47,6 +44,7 @@ export default function RootLayout({
         >
           <TRPCReactProvider>
             <MainLayout>{children}</MainLayout>
+            <ReactQueryDevtools />
           </TRPCReactProvider>
         </ThemeProvider>
       </body>

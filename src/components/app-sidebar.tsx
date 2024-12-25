@@ -35,6 +35,18 @@ const data = {
         },
       ],
     },
+    {
+      title: "Salons",
+      url: "#",
+      icon: SquareTerminal,
+      isActive: true,
+      items: [
+        {
+          title: "All salons",
+          url: "/salons",
+        },
+      ],
+    },
   ],
 };
 

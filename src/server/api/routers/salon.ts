@@ -2,6 +2,7 @@ import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 import { type Artist, type Artists } from "@/@types/RedisArtistData";
+import { Salon, Salons } from "@/@types/RedisSalonData";
 
 // Mocked DB
 interface Post {
@@ -15,31 +16,32 @@ const posts: Post[] = [
   },
 ];
 
-export const artistRouter = createTRPCRouter({
+export const salonRouter = createTRPCRouter({
   getAll: publicProcedure.query(async ({ ctx }) => {
     const redis = ctx.redis;
     //get all keys of model form redis
-    const keys = await redis.keys("models.Artists:*");
+    const keys = await redis.keys("models.Salons:*");
 
     // Fetch JSON data for each key
-    const artists = [];
+    const salons = [];
     for (const key of keys) {
       const data = (await redis.call("JSON.GET", key)) as string;
-      artists.push(JSON.parse(data));
+      salons.push(JSON.parse(data));
     }
 
-    return artists as Artists;
+    return salons as Salons;
   }),
 
   getById: publicProcedure
-    .input(z.object({ artistsId: z.string().min(1) }))
+    .input(z.object({ salonId: z.string().min(1) }))
     .query(async ({ input, ctx }) => {
       const redis = ctx.redis;
+
       const data = (await redis.call(
         "JSON.GET",
-        `models.Artists:${input.artistsId}`,
+        `models.Salons:${input.salonId}`,
       )) as string;
-      return JSON.parse(data) as Artist;
+      return JSON.parse(data) as Salon;
     }),
 
   getLatest: publicProcedure.query(() => {
