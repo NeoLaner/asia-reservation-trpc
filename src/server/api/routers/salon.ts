@@ -2,7 +2,7 @@ import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 import { type Artist, type Artists } from "@/@types/RedisArtistData";
-import { Salon, Salons } from "@/@types/RedisSalonData";
+import { type Salon, type Salons } from "@/@types/RedisSalonData";
 
 // Mocked DB
 interface Post {

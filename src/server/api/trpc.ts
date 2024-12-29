@@ -27,8 +27,8 @@ import { ZodError } from "zod";
  */
 export const createTRPCContext = async (opts: { headers: Headers }) => {
   const redis = createRedis();
-
   const rabbitChannel = await getRabbitMQChannel();
+
   bugDetector(redis);
   return {
     redis,

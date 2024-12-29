@@ -2,6 +2,7 @@ import { api } from "@/trpc/server";
 
 async function page({ params }: { params: Promise<{ artistsId: string }> }) {
   const { artistsId } = await params;
+
   const artist = await api.artist.getById({ artistsId });
   return (
     <div>
